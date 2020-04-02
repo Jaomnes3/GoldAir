@@ -1,0 +1,17 @@
+計算条件（変更点）
+
+日付：200402　[計算中]
+
+ディレクトリは$FOAM_TUTORIALS/lagrangian/DPMFoam/Goldschmidtよりコピーし、以下の内容を変更している。
+
+〇blockMeshDict
+	-3mm x 3mm x 15mmの直方体に変形。
+	-メッシュ分割は10 x 10 x 54に変更、総数は5400で不変。
+〇kinematicCloudProperties
+	-sizeDistribution・maxInteractionDistanceは0.000025に変更。
+〇kinematicCloudPositions
+[未設定]-個数は24750個で不変、配置は15 x 15 x 110を採用。
+
+〇U.air
+	-ストークスの重力沈降速度式より、終末沈降測度は粒子径の二乗の関数である。
+	-従って、粒子径が元の1/100に設定してあるため、流速は1/10000にあたる0.0001875m/sに変更。
