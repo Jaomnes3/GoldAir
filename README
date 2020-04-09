@@ -1,6 +1,11 @@
 計算条件（変更点）
 
-日付：200402　[計算中]
+
+日付：200408[計算中]
+〇blockMeshDict
+	-kinematicCloudPositionsはMeshManにより作成したものを用いた。
+
+日付：200402　[計算終了、進行しなかったため]
 
 ディレクトリは$FOAM_TUTORIALS/lagrangian/DPMFoam/Goldschmidtよりコピーし、以下の内容を変更している。
 
@@ -10,8 +15,19 @@
 〇kinematicCloudProperties
 	-sizeDistribution・maxInteractionDistanceは0.000025に変更。
 〇kinematicCloudPositions
-[未設定]-個数は24750個で不変、配置は15 x 15 x 110を採用。
+	-個数は24750個で不変、配置は15 x 15 x 110を採用。
 
 〇U.air
 	-ストークスの重力沈降速度式より、終末沈降測度は粒子径の二乗の関数である。
 	-従って、粒子径が元の1/100に設定してあるため、流速は1/10000にあたる0.0001875m/sに変更。
+
+◎結果
+　　粒子の大きさと計算領域の形状のみを変更したつもりが、0.003sの結果が出力された時点では
+計算の進行が未改変のGoldschmidtと比較して非常に遅くなっている。
+現状ではCourant_Number_meanは0.00015と正常のようだが、move-collide_subcyclesの方は109と、
+元のGoldschmidtの4~10程度と比較すると著しく膨張している。
+　
+　この原因として、完全な直方体状に配列したkinematicCloudPositionsが挙げられる。
+恐らく、垂直に配列した粒子同士の衝突回数がしているのだろう。
+
+対策として、次はメッシュマンを使って配置したkinematicCloudPositionsを用いる。
